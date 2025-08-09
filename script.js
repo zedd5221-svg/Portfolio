@@ -54,63 +54,66 @@ typeEffect();
 window.onload = () => {
   const scene = new THREE.Scene();
   const camera = new THREE.PerspectiveCamera(75, 1, 0.1, 1000);
-
+  
   const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
   renderer.setClearColor(0x000000, 0);
   renderer.setSize(400, 400);
   document.getElementById('three-container').appendChild(renderer.domElement);
-
+  
   const geometry = new THREE.BoxGeometry();
   const material = new THREE.MeshStandardMaterial({ color: 0x00ff99 });
   const cube = new THREE.Mesh(geometry, material);
   scene.add(cube);
-
+  
   const light = new THREE.PointLight(0xffffff, 1);
   light.position.set(5, 5, 5);
   scene.add(light);
-
+  
   camera.position.z = 5;
-
+  
   const colors = [
-    new THREE.Color(0x00ff99),  // green (normal)
-    new THREE.Color(0xffa500),  // orange (medium heat)
-    new THREE.Color(0xff0000),  // red (high heat)
+    new THREE.Color(0x00ff99), // green (normal)
+    new THREE.Color(0xffa500), // orange (medium heat)
+    new THREE.Color(0xff0000), // red (high heat)
   ];
-
-  // This multiplier is from page scroll position (0 to 2)
+  
   function getScrollSpeedMultiplier() {
     const scrollTop = window.scrollY;
     const docHeight = document.documentElement.scrollHeight - window.innerHeight;
     if (docHeight === 0) return 0;
     return Math.min((scrollTop / docHeight) * 2, 2);
   }
-
-  // This multiplier is increased temporarily by wheel scroll bursts, then decays
+  
   let wheelSpeedBoost = 0;
-
+  
+  // Desktop scroll boost
   window.addEventListener('wheel', (event) => {
-    // Increase burst effect based on scroll wheel delta, capped to max 2
     wheelSpeedBoost += Math.min(Math.abs(event.deltaY) * 0.005, 0.5);
     if (wheelSpeedBoost > 2) wheelSpeedBoost = 2;
   });
-
+  
+  // Mobile scroll boost (detect quick swipes)
+  let lastScrollY = window.scrollY;
+  window.addEventListener('scroll', () => {
+    const scrollDelta = Math.abs(window.scrollY - lastScrollY);
+    lastScrollY = window.scrollY;
+    
+    // Boost speed proportionally to swipe distance
+    if (scrollDelta > 5) {
+      wheelSpeedBoost += Math.min(scrollDelta * 0.01, 0.5);
+      if (wheelSpeedBoost > 2) wheelSpeedBoost = 2;
+    }
+  }, { passive: true });
+  
   function animate() {
     requestAnimationFrame(animate);
-
-    // Base speed from scroll position
+    
     const scrollMultiplier = getScrollSpeedMultiplier();
-
-    // Total multiplier = base scroll + temporary wheel boost
     const totalSpeedMultiplier = scrollMultiplier + wheelSpeedBoost;
-
-    // Base rotation speeds
-    const baseSpeedX = 0.01;
-    const baseSpeedY = 0.02;
-
-    cube.rotation.x += baseSpeedX * (1 + totalSpeedMultiplier);
-    cube.rotation.y += baseSpeedY * (1 + totalSpeedMultiplier);
-
-    // Color interpolation based on totalSpeedMultiplier (0 to 2)
+    
+    cube.rotation.x += 0.01 * (1 + totalSpeedMultiplier);
+    cube.rotation.y += 0.02 * (1 + totalSpeedMultiplier);
+    
     let color;
     if (totalSpeedMultiplier < 1) {
       color = colors[0].clone().lerp(colors[1], totalSpeedMultiplier);
@@ -118,10 +121,8 @@ window.onload = () => {
       color = colors[1].clone().lerp(colors[2], totalSpeedMultiplier - 1);
     }
     cube.material.color.copy(color);
-
-    // Slowly decay the wheel speed boost to zero
+    
     wheelSpeedBoost *= 0.95;
-
     renderer.render(scene, camera);
   }
   animate();
