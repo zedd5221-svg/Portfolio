@@ -1,0 +1,141 @@
+@import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
+
+.form-white.input-group>.form-control:focus {
+  border-color: #fff;
+  box-shadow: inset 0 0 0 1px #fff;
+}
+
+.navbar-dark .navbar-nav .nav-link {
+  font-family: 'Share Tech Mono', monospace;
+  color: #fff;
+}
+
+.navbar-dark .navbar-nav .nav-link:hover,
+.navbar-dark .navbar-nav .nav-link:focus {
+  color: rgba(0, 255, 119, 0.75);
+}
+
+.typing {
+  font-family: 'Share Tech Mono', monospace;
+  color: #00ff99 !important;                 /* Neon green tech style */
+  overflow: hidden;               
+  white-space: nowrap;            
+  border-right: 3px solid #00ff99; /* Cursor */
+  display: inline-block;
+  font-size: 2rem;
+  z-index: 2;
+  
+}
+
+.Textfont{
+    font-family: 'Share Tech Mono', monospace;
+    z-index: 2;
+}
+
+  body, html {
+    height: 100%;
+    margin: 0;
+    font-family: 'Share Tech Mono', monospace;
+    background-color: #0a0a0a;
+    color: #00ff99;
+    overflow-x: hidden;
+  }
+
+  /* Container to hold background shapes */
+  .tech-bg {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1; /* behind everything */
+    overflow: hidden;
+    background: transparent;
+  }
+
+  /* Common shape styles */
+  .shape {
+  position: absolute;
+  border: 2px solid #00ff99;
+  background-color: rgba(0, 255, 153, 0.15); /* subtle neon fill */
+  opacity: 0.6; /* higher opacity */
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+}
+
+  /* Circles */
+  .circle {
+    border-radius: 50%;
+  }
+
+  /* Squares */
+  .square {
+    border-radius: 8px;
+  }
+
+  /* Animate moving slowly left-right */
+  @keyframes floatX {
+    0%, 100% { transform: translateX(0); }
+    50% { transform: translateX(20px); }
+  }
+
+  /* Animate glowing effect */
+  @keyframes glow {
+    0%, 100% { box-shadow: 0 0 10px #00ff99; }
+    50% { box-shadow: 0 0 20px #00ff99; }
+  }
+
+  /* Specific shapes with different sizes, positions, animations */
+  .circle1 {
+    width: 80px; height: 80px;
+    top: 10%;
+    left: 15%;
+    animation: floatX 6s infinite, glow 4s infinite;
+  }
+
+  .circle2 {
+    width: 120px; height: 120px;
+    top: 70%;
+    left: 75%;
+    animation: floatX 8s infinite alternate, glow 5s infinite;
+  }
+
+  .square1 {
+    width: 100px; height: 100px;
+    top: 40%;
+    left: 50%;
+    animation: floatX 7s infinite alternate-reverse, glow 6s infinite;
+  }
+
+  .square2 {
+    width: 50px; height: 50px;
+    top: 80%;
+    left: 25%;
+    animation: floatX 9s infinite, glow 4.5s infinite alternate;
+  }
+
+  /* Content above background */
+  .content {
+    position: relative;
+    z-index: 10;
+  }
+
+
+
+#three-container {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  z-index: 0;
+  pointer-events: none;
+}
+
+
+
+
+
+
+
+
+
+
+
