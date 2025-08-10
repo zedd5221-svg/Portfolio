@@ -17,26 +17,27 @@
 
 .typing {
   font-family: 'Share Tech Mono', monospace;
-  color: #00ff99 !important;                 /* Neon green tech style */
-  overflow: hidden;               
+  color: #00ff99 !important;  /* Neon green tech style */
   white-space: nowrap;            
   border-right: 3px solid #00ff99; /* Cursor */
   display: inline-block;
   font-size: 2rem;
-  z-index: 2;
-  
+  position: relative; /* ✅ allow z-index to take effect */
+  z-index: 20; /* ✅ now above canvas and tech-bg */
 }
 
-.Textfont{
-    font-family: 'Share Tech Mono', monospace;
-    z-index: 2;
+.Textfont {
+  font-family: 'Share Tech Mono', monospace;
+  position: relative; /* ✅ allow z-index to work */
+  z-index: 20; /* above canvas and tech-bg */
+  
 }
 
   body, html {
     height: 100%;
     margin: 0;
     font-family: 'Share Tech Mono', monospace;
-    background-color: #0a0a0a;
+    background-color: transparent;
     color: #00ff99;
     overflow-x: hidden;
   }
@@ -47,7 +48,7 @@
     top: 0; left: 0;
     width: 100%;
     height: 100%;
-    z-index: 1; /* behind everything */
+    z-index: 2; /* behind everything */
     overflow: hidden;
     background: transparent;
   }
@@ -121,14 +122,12 @@
 
 
 
-#three-container {
+canvas{
   position: fixed;
-  width: 100vw;
-  height: 100vh;
+  top: 0;
+  left: 0;
   z-index: 0;
-  pointer-events: none;
 }
-
 
 
 nav.navbar {
@@ -139,6 +138,12 @@ nav.navbar {
 
 
 
-
-
+#three-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0; /* Canvas stays at the back */
+}
 

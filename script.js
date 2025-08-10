@@ -34,12 +34,9 @@ function typeEffect() {
   }
 }
 
-
-
-typeEffect();
-
-
-
+document.addEventListener('DOMContentLoaded', () => {
+  typeEffect();
+});
 
 
 
@@ -47,84 +44,125 @@ typeEffect();
 
 
 
+const scene = new THREE.Scene();
+
+const camera = new THREE.PerspectiveCamera(
+  75, 
+  window.innerWidth / window.innerHeight, 
+  0.1, 
+  1000
+);
+
+const renderer = new THREE.WebGLRenderer({
+  canvas: document.querySelector('#bg'),
+});
+
+renderer.setPixelRatio(window.devicePixelRatio);
+renderer.setSize(window.innerWidth, window.innerHeight);
+
+camera.position.setZ(50);
+
+//renderer.render(scene, camera);
+
+//Shape
+const geometry = new THREE.TorusGeometry(10, 3, 16, 100)
+
+//material
+const material = new THREE.MeshBasicMaterial({color: 0xFF6347, wireframe: true});
+
+//Mesh
+const torus = new THREE.Mesh( geometry, material);
+
+scene.add(torus);
 
 
-
-
-window.onload = () => {
-  const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(75, 1, 0.1, 1000);
+//stars
+function addstar() {
   
-  const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-  renderer.setClearColor(0x000000, 0);
-  renderer.setSize(400, 400);
-  document.getElementById('three-container').appendChild(renderer.domElement);
+  const geometry = new THREE.SphereGeometry(0.25, 24, 24)
   
-  const geometry = new THREE.BoxGeometry();
-  const material = new THREE.MeshStandardMaterial({ color: 0x00ff99 });
-  const cube = new THREE.Mesh(geometry, material);
-  scene.add(cube);
+  const material = new THREE.MeshBasicMaterial({color: 0xffffff, wireframe: true});
   
-  const light = new THREE.PointLight(0xffffff, 1);
-  light.position.set(5, 5, 5);
-  scene.add(light);
+  const star = new THREE.Mesh(geometry, material);
   
-  camera.position.z = 5;
+  const [x, y, z] = Array(3).fill().map(() => THREE.MathUtils.randFloatSpread(100));
   
-  const colors = [
-    new THREE.Color(0x00ff99), // green (normal)
-    new THREE.Color(0xffa500), // orange (medium heat)
-    new THREE.Color(0xff0000), // red (high heat)
-  ];
-  
-  function getScrollSpeedMultiplier() {
-    const scrollTop = window.scrollY;
-    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-    if (docHeight === 0) return 0;
-    return Math.min((scrollTop / docHeight) * 2, 2);
-  }
-  
-  let wheelSpeedBoost = 0;
-  
-  // Desktop scroll boost
-  window.addEventListener('wheel', (event) => {
-    wheelSpeedBoost += Math.min(Math.abs(event.deltaY) * 0.005, 0.5);
-    if (wheelSpeedBoost > 2) wheelSpeedBoost = 2;
-  });
-  
-  // Mobile scroll boost (detect quick swipes)
-  let lastScrollY = window.scrollY;
-  window.addEventListener('scroll', () => {
-    const scrollDelta = Math.abs(window.scrollY - lastScrollY);
-    lastScrollY = window.scrollY;
-    
-    // Boost speed proportionally to swipe distance
-    if (scrollDelta > 5) {
-      wheelSpeedBoost += Math.min(scrollDelta * 0.01, 0.5);
-      if (wheelSpeedBoost > 2) wheelSpeedBoost = 2;
-    }
-  }, { passive: true });
-  
-  function animate() {
-    requestAnimationFrame(animate);
-    
-    const scrollMultiplier = getScrollSpeedMultiplier();
-    const totalSpeedMultiplier = scrollMultiplier + wheelSpeedBoost;
-    
-    cube.rotation.x += 0.01 * (1 + totalSpeedMultiplier);
-    cube.rotation.y += 0.02 * (1 + totalSpeedMultiplier);
-    
-    let color;
-    if (totalSpeedMultiplier < 1) {
-      color = colors[0].clone().lerp(colors[1], totalSpeedMultiplier);
-    } else {
-      color = colors[1].clone().lerp(colors[2], totalSpeedMultiplier - 1);
-    }
-    cube.material.color.copy(color);
-    
-    wheelSpeedBoost *= 0.95;
-    renderer.render(scene, camera);
-  }
-  animate();
-};
+  star.position.set(x, y, z);
+  scene.add(star)
+}
 
+Array(200).fill().forEach(addstar)
+
+
+//for background
+const spaceTexture = new THREE.TextureLoader().load('spacebg.jpg');
+
+scene.background = spaceTexture;
+
+//Texture the objects.
+// Moon texture
+const moonTexture = new THREE.TextureLoader().load('moon.jpg');
+
+const moon = new THREE.Mesh(
+  new THREE.SphereGeometry(3, 32, 32),
+  new THREE.MeshStandardMaterial({ map: moonTexture })
+);
+
+moon.position.set(0, 0, 0);
+scene.add(moon);
+
+// Add light for moon and torus
+const pointLight = new THREE.PointLight(0xffffff);
+pointLight.position.set(20, 20, 20);
+
+const ambientLight = new THREE.AmbientLight(0xffffff, 0.3);
+
+scene.add(pointLight, ambientLight);
+
+//camera
+function moveCamera() {
+  const t = document.body.getBoundingClientRect().top();
+  
+  
+  camera.position.x = t * -0.21;
+  camera.position.y = t * -0.21;
+  camera.position.z = t * -0.01;
+  
+  
+}
+
+document.body.onscroll = moveCamera
+
+window.addEventListener('scroll', moveCamera);
+
+let lastY = 0;
+
+window.addEventListener('touchstart', e => {
+  lastY = e.touches[0].clientY;
+});
+
+window.addEventListener('touchmove', e => {
+  let deltaY = e.touches[0].clientY - lastY;
+  lastY = e.touches[0].clientY;
+  
+  camera.position.x += deltaY * -0.01;
+  camera.position.z += deltaY * -0.20;
+  camera.position.y += deltaY * -0.01;
+  
+});
+
+function animate() {
+  requestAnimationFrame(animate)
+  
+  torus.rotation.x += 0.01;
+  torus.rotation.y += 0.01;
+  torus.rotation.z += 0.01;
+  
+  moon.rotation.x += 0.01;
+  moon.rotation.y += 0.01;
+  moon.rotation.z += 0.01;
+  
+  renderer.render( scene, camera)
+}
+
+animate();
