@@ -85,7 +85,7 @@ function addstar() {
   
   const star = new THREE.Mesh(geometry, material);
   
-  const [x, y, z] = Array(3).fill().map(() => THREE.MathUtils.randFloatSpread(100));
+  const [x, y, z] = Array(3).fill().map(() => THREE.MathUtils.randFloatSpread(200));
   
   star.position.set(x, y, z);
   scene.add(star)
@@ -103,12 +103,23 @@ scene.background = spaceTexture;
 // Moon texture
 const moonTexture = new THREE.TextureLoader().load('moon.jpg');
 
+
+const MyPic = new THREE.TextureLoader().load('sacron.png');
+
+const picture = new THREE.Mesh(
+  new THREE.BoxGeometry(15, 15, 15),
+  new THREE.MeshStandardMaterial({ map: MyPic })
+);
+
+picture.position.set(50, 5, 90);
+scene.add(picture);
+
 const moon = new THREE.Mesh(
-  new THREE.SphereGeometry(3, 32, 32),
+  new THREE.SphereGeometry(6, 32, 32),
   new THREE.MeshStandardMaterial({ map: moonTexture })
 );
 
-moon.position.set(0, 0, 0);
+moon.position.set(30, 0, 70);
 scene.add(moon);
 
 // Add light for moon and torus
@@ -124,8 +135,8 @@ function moveCamera() {
   const t = document.body.getBoundingClientRect().top();
   
   
-  camera.position.x = t * -0.21;
-  camera.position.y = t * -0.21;
+  camera.position.x = t * -0.01;
+  camera.position.y = t * -0.31;
   camera.position.z = t * -0.01;
   
   
@@ -145,9 +156,18 @@ window.addEventListener('touchmove', e => {
   let deltaY = e.touches[0].clientY - lastY;
   lastY = e.touches[0].clientY;
   
-  camera.position.x += deltaY * -0.01;
+  camera.position.x += deltaY * -0.16;
   camera.position.z += deltaY * -0.20;
   camera.position.y += deltaY * -0.01;
+  
+  picture.rotation.x += 0.01;
+  picture.rotation.y += 0.01;
+  picture.rotation.z += 0.01;
+  
+  moon.rotation.x += 0.00;
+  moon.rotation.y += 0.00;
+  moon.rotation.z += 0.01;
+  
   
 });
 
@@ -158,9 +178,9 @@ function animate() {
   torus.rotation.y += 0.01;
   torus.rotation.z += 0.01;
   
-  moon.rotation.x += 0.01;
-  moon.rotation.y += 0.01;
-  moon.rotation.z += 0.01;
+  
+  
+  
   
   renderer.render( scene, camera)
 }
