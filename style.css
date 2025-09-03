@@ -1,149 +1,279 @@
-@import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'JetBrains Mono', monospace;
+            background: #0a0a0a;
+            color: #00ff00;
+            min-height: 100vh;
+            overflow-x: auto;
+            position: relative;
+        }
 
-.form-white.input-group>.form-control:focus {
-  border-color: #fff;
-  box-shadow: inset 0 0 0 1px #fff;
-}
+        /* Matrix Rain Effect */
+        .matrix-rain {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+            opacity: 0.3;
+        }
 
-.navbar-dark .navbar-nav .nav-link {
-  font-family: 'Share Tech Mono', monospace;
-  color: #fff;
-}
+        .matrix-column {
+            position: absolute;
+            top: -100px;
+            font-size: 14px;
+            color: #00ff00;
+            animation: matrix-fall linear infinite;
+            white-space: pre;
+            line-height: 1.2;
+        }
 
-.navbar-dark .navbar-nav .nav-link:hover,
-.navbar-dark .navbar-nav .nav-link:focus {
-  color: rgba(0, 255, 119, 0.75);
-}
+        @keyframes matrix-fall {
+            to {
+                transform: translateY(100vh);
+            }
+        }
+        
+        .terminal {
+            background: rgba(10, 10, 10, 0.95);
+            border: 2px solid #333;
+            border-radius: 8px;
+            margin: 10px;
+            padding: 20px;
+            min-height: calc(100vh - 20px);
+            box-shadow: 0 0 20px rgba(0, 255, 0, 0.3);
+            position: relative;
+            z-index: 2;
+        }
+        
+        .terminal-header {
+            background: #1a1a1a;
+            padding: 10px;
+            border-radius: 6px 6px 0 0;
+            margin: -20px -20px 20px -20px;
+            border-bottom: 1px solid #333;
+            position: relative;
+        }
+        
+        .terminal-buttons {
+            display: flex;
+            gap: 8px;
+        }
+        
+        .btn {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+        
+        .btn.close { background: #ff5f5f; }
+        .btn.minimize { background: #ffbe4b; }
+        .btn.maximize { background: #00d65a; }
+        
+        .terminal-title {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            color: #666;
+            font-size: 14px;
+        }
 
-.typing {
-  font-family: 'Share Tech Mono', monospace;
-  color: #00ff99 !important;  /* Neon green tech style */
-  white-space: nowrap;            
-  border-right: 3px solid #00ff99; /* Cursor */
-  display: inline-block;
-  font-size: 2rem;
-  position: relative; /* ✅ allow z-index to take effect */
-  z-index: 20; /* ✅ now above canvas and tech-bg */
-}
+        .logo-container {
+            text-align: center;
+            margin-bottom: 20px;
+        }
 
-.Textfont {
-  font-family: 'Share Tech Mono', monospace;
-  position: relative; /* ✅ allow z-index to work */
-  z-index: 20; /* above canvas and tech-bg */
-  
-}
+        .psite-logo {
+            max-width: 200px;
+            height: auto;
+            filter: drop-shadow(0 0 10px rgba(255, 255, 0, 0.5));
+            margin-bottom: 10px;
+        }
+        
+        .ascii-name {
+            color: #00ff00;
+            font-size: 10px;
+            line-height: 1;
+            text-align: center;
+            margin-bottom: 30px;
+            font-weight: bold;
+            text-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
+        }
+        
+        .prompt {
+            color: #00ff00;
+        }
+        
+        .input-section {
+            margin: 20px 0;
+            background: rgba(17, 17, 17, 0.9);
+            padding: 15px;
+            border: 1px solid #333;
+            border-radius: 4px;
+        }
+        
+        .message-input {
+            width: 100%;
+            background: transparent;
+            border: none;
+            color: #00ff00;
+            font-family: inherit;
+            font-size: 14px;
+            outline: none;
+            resize: vertical;
+            min-height: 100px;
+            padding: 10px;
+        }
+        
+        .message-input::placeholder {
+            color: #666;
+        }
+        
+        .send-btn {
+            background: #1a4a1a;
+            border: 1px solid #00ff00;
+            color: #00ff00;
+            padding: 8px 20px;
+            font-family: inherit;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: all 0.3s;
+        }
+        
+        .send-btn:hover {
+            background: #00ff00;
+            color: #000;
+            box-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
+        }
+        
+        .messages-container {
+            margin-top: 30px;
+            max-height: 400px;
+            overflow-y: auto;
+            border: 1px solid #333;
+            background: rgba(17, 17, 17, 0.9);
+            padding: 15px;
+        }
+        
+        .message {
+            margin-bottom: 15px;
+            padding: 10px;
+            background: rgba(26, 26, 26, 0.9);
+            border-left: 3px solid #00ff00;
+            border-radius: 0 4px 4px 0;
+            animation: fadeIn 0.5s ease-in;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .message-header {
+            color: #666;
+            font-size: 12px;
+            margin-bottom: 5px;
+        }
+        
+        .message-content {
+            color: #ffffff;
+            line-height: 1.4;
+        }
+        
+        .typing {
+            color: #ffff00;
+        }
+        
+        .cursor {
+            animation: blink 1s infinite;
+        }
+        
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+        
+        .stats {
+            margin-top: 20px;
+            color: #666;
+            font-size: 12px;
+            text-align: center;
+        }
 
-  body, html {
-    height: 100%;
-    margin: 0;
-    font-family: 'Share Tech Mono', monospace;
-    background-color: transparent;
-    color: #00ff99;
-    overflow-x: hidden;
-  }
+        .sent-confirmation {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0, 0, 0, 0.95);
+            border: 2px solid #00ff00;
+            border-radius: 8px;
+            padding: 30px;
+            z-index: 1000;
+            text-align: center;
+            box-shadow: 0 0 30px rgba(0, 255, 0, 0.5);
+        }
 
-  /* Container to hold background shapes */
-  .tech-bg {
-    position: fixed;
-    top: 0; left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 2; /* behind everything */
-    overflow: hidden;
-    background: transparent;
-  }
+        .sent-confirmation h2 {
+            color: #00ff00;
+            margin-bottom: 20px;
+            font-size: 18px;
+        }
 
-  /* Common shape styles */
-  .shape {
-  position: absolute;
-  border: 2px solid #00ff99;
-  background-color: rgba(0, 255, 153, 0.15); /* subtle neon fill */
-  opacity: 0.6; /* higher opacity */
-  animation-timing-function: ease-in-out;
-  animation-iteration-count: infinite;
-}
+        .sent-confirmation p {
+            color: #ffff00;
+            margin-bottom: 20px;
+        }
 
-  /* Circles */
-  .circle {
-    border-radius: 50%;
-  }
+        .close-btn {
+            background: #1a4a1a;
+            border: 1px solid #00ff00;
+            color: #00ff00;
+            padding: 8px 20px;
+            font-family: inherit;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
 
-  /* Squares */
-  .square {
-    border-radius: 8px;
-  }
+        .close-btn:hover {
+            background: #00ff00;
+            color: #000;
+        }
 
-  /* Animate moving slowly left-right */
-  @keyframes floatX {
-    0%, 100% { transform: translateX(0); }
-    50% { transform: translateX(20px); }
-  }
+        .page-transition {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #0a0a0a;
+            z-index: 999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
 
-  /* Animate glowing effect */
-  @keyframes glow {
-    0%, 100% { box-shadow: 0 0 10px #00ff99; }
-    50% { box-shadow: 0 0 20px #00ff99; }
-  }
+        .loading-text {
+            color: #00ff00;
+            font-size: 16px;
+            margin-bottom: 20px;
+            animation: pulse 1.5s infinite;
+        }
 
-  /* Specific shapes with different sizes, positions, animations */
-  .circle1 {
-    width: 80px; height: 80px;
-    top: 10%;
-    left: 15%;
-    animation: floatX 6s infinite, glow 4s infinite;
-  }
-
-  .circle2 {
-    width: 120px; height: 120px;
-    top: 70%;
-    left: 75%;
-    animation: floatX 8s infinite alternate, glow 5s infinite;
-  }
-
-  .square1 {
-    width: 100px; height: 100px;
-    top: 40%;
-    left: 50%;
-    animation: floatX 7s infinite alternate-reverse, glow 6s infinite;
-  }
-
-  .square2 {
-    width: 50px; height: 50px;
-    top: 80%;
-    left: 25%;
-    animation: floatX 9s infinite, glow 4.5s infinite alternate;
-  }
-
-  /* Content above background */
-  .content {
-    position: relative;
-    z-index: 10;
-  }
-
-
-
-canvas{
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 0;
-}
-
-
-nav.navbar {
-  position: relative;
-  z-index: 1000;
-}
-
-
-
-
-#three-container {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 0; /* Canvas stays at the back */
-}
-
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }

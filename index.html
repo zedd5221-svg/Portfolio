@@ -1,95 +1,127 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sarcon</title>
-  <link rel="stylesheet" href="style.css">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sarcon Terminal Messages</title>
+    <link rel="stylesheet" href="style.css">
+
 </head>
 <body>
+    <!-- Matrix Rain Effect -->
+    <div class="matrix-rain" id="matrixRain"></div>
 
-
-
-<canvas id="bg"></canvas>
-
-
-
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <div class="container-fluid">
-    <!-- Brand -->
-    <a class="navbar-brand" href="#">
-      <i class="fas fa-code fa-2x mx-3 ps-1"></i>
-    </a>
-
-    <!-- Toggler button -->
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" 
-            data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" 
-            aria-expanded="false" aria-label="Toggle navigation">
-      <i class="fas fa-bars"></i>
-    </button>
-
-    <!-- Navbar content -->
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <!-- Nav links -->
-      <ul class="navbar-nav ms-auto align-items-center">
-        <li class="nav-item"><a class="nav-link" href="#">Home</a></li>
-        <li class="nav-item"><a class="nav-link" href="#">About</a></li>
-        <li class="nav-item"><a class="nav-link" href="#">Projects</a></li>
-        <li class="nav-item"><a class="nav-link" href="#">Contact</a></li>
-      </ul>
-
-      <!-- Right side -->
-      <ul class="navbar-nav ms-auto">
-        <a class="navbar-brand" href="#">
-          <i class="fab fa-github fa-2x mx-3 ps-1"></i>
-        </a>
-      </ul>
+    <div class="terminal" id="mainTerminal">
+        <div class="terminal-header">
+            <div class="terminal-buttons">
+                <div class="btn close"></div>
+                <div class="btn minimize"></div>
+                <div class="btn maximize"></div>
+            </div>
+            <div class="terminal-title">sarcon@terminal:~/messages$</div>
+        </div>
+        
+        <div class="logo-container">
+            <svg class="psite-logo" viewBox="0 0 400 200" xmlns="http://www.w3.org/2000/svg">
+                <!-- Left PSITE logo -->
+                <circle cx="100" cy="100" r="90" fill="#ffff00" stroke="#333" stroke-width="2"/>
+                <circle cx="100" cy="100" r="60" fill="#4169e1"/>
+                <rect x="85" y="85" width="30" height="30" fill="#dc143c"/>
+                <rect x="70" y="70" width="15" height="15" fill="#ffffff"/>
+                <polygon points="85,120 100,140 85,140" fill="#4169e1"/>
+                <circle cx="90" cy="110" r="8" fill="#4169e1"/>
+                <!-- Signal waves -->
+                <path d="M 90 100 Q 95 95 100 100 Q 95 105 90 100" stroke="#8a2be2" stroke-width="2" fill="none"/>
+                <path d="M 85 100 Q 92 90 100 100 Q 92 110 85 100" stroke="#8a2be2" stroke-width="2" fill="none"/>
+                <!-- Stars -->
+                <polygon points="45,50 47,56 53,56 48,60 50,66 45,62 40,66 42,60 37,56 43,56" fill="#ffff00"/>
+                <polygon points="35,70 37,76 43,76 38,80 40,86 35,82 30,86 32,80 27,76 33,76" fill="#ffff00"/>
+                <polygon points="55,40 57,46 63,46 58,50 60,56 55,52 50,56 52,50 47,46 53,46" fill="#ffff00"/>
+                <text x="100" y="25" text-anchor="middle" fill="#8a2be2" font-family="monospace" font-weight="bold" font-size="14">PSITE</text>
+                
+                <!-- Right PSITS logo -->
+                <circle cx="300" cy="100" r="90" fill="#ffff00" stroke="#333" stroke-width="2"/>
+                <circle cx="300" cy="100" r="60" fill="#4169e1"/>
+                <rect x="285" y="85" width="30" height="30" fill="#dc143c"/>
+                <rect x="270" y="70" width="15" height="15" fill="#ffffff"/>
+                <polygon points="285,120 300,140 285,140" fill="#ffffff"/>
+                <circle cx="300" cy="110" r="8" fill="#ffffff"/>
+                <!-- Signal waves -->
+                <path d="M 290 100 Q 295 95 300 100 Q 295 105 290 100" stroke="#ffffff" stroke-width="2" fill="none"/>
+                <path d="M 285 100 Q 292 90 300 100 Q 292 110 285 100" stroke="#ffffff" stroke-width="2" fill="none"/>
+                <path d="M 280 100 Q 290 85 300 100 Q 290 115 280 100" stroke="#ffffff" stroke-width="2" fill="none"/>
+                <text x="300" y="25" text-anchor="middle" fill="#8a2be2" font-family="monospace" font-weight="bold" font-size="14">PSITS</text>
+            </svg>
+        </div>
+        
+        <div class="ascii-name">
+███████╗ █████╗ ██████╗  ██████╗ ██████╗ ███╗   ██╗
+██╔════╝██╔══██╗██╔══██╗██╔════╝██╔═══██╗████╗  ██║
+███████╗███████║██████╔╝██║     ██║   ██║██╔██╗ ██║
+╚════██║██╔══██║██╔══██╗██║     ██║   ██║██║╚██╗██║
+███████║██║  ██║██║  ██║╚██████╗╚██████╔╝██║ ╚████║
+╚══════╝╚═╝  ╚═╝╚═╝  ╚═╝ ╚═════╝ ╚═════╝ ╚═╝  ╚═══╝
+        </div>
+        
+        <div class="prompt">
+            <span style="color: #00ff00;">root@sarcon-terminal:</span><span style="color: #0080ff;">~</span><span style="color: #00ff00;">$</span> <span class="typing">Anonymous Message Terminal Active<span class="cursor">_</span></span>
+        </div>
+        
+        <div class="input-section">
+            <div class="prompt">
+                <span style="color: #ffff00;">[ANONYMOUS MODE]</span> Send a message to Sarcon:
+            </div>
+            <textarea 
+                class="message-input" 
+                id="messageInput"
+                placeholder="Type your anonymous message here... Press Ctrl+Enter to send"
+                maxlength="500"
+            ></textarea>
+            <button class="send-btn" onclick="sendMessage()">TRANSMIT MESSAGE</button>
+        </div>
+        
+        <div class="prompt">
+            <span style="color: #00ff00;">root@sarcon-terminal:</span><span style="color: #0080ff;">~</span><span style="color: #00ff00;">$</span> cat incoming_messages.log
+        </div>
+        
+        <div class="messages-container" id="messagesContainer">
+            <div class="message">
+                <div class="message-header">[SYSTEM] Connection established - Anonymous mode active</div>
+                <div class="message-content">Terminal ready to receive anonymous messages for Sarcon...</div>
+            </div>
+        </div>
+        
+        <div class="stats">
+            <span style="color: #666;">Messages received: </span><span id="messageCount" style="color: #00ff00;">0</span> | 
+            <span style="color: #666;">Status: </span><span style="color: #00ff00;">ONLINE</span> | 
+            <span style="color: #666;">Encryption: </span><span style="color: #ffff00;">ENABLED</span>
+        </div>
     </div>
-  </div>
-</nav>
-   
-<div class="text-secondary px-4 py-5 text-center min-vh-100">
-  <div class="py-5">
-    <h1 class="display-7 fw-bold typing"></h1>
-    <div class="col-lg-6 mx-auto">
-      <p class="fs-5 mb-4 text-light Textfont">
-        I am a 3rd year student pursuing a Bachelor of Science in Information Technology 
-        at Cotabato State University. I am proud to be from the Philippines and passionate about technology and innovation.
-      </p>
-  </div>
-</div>
 
-<div class="text-secondary px-4 py-5 text-center min-vh-100">
-  
-  <div class="Container">
-    
-  </div>
-  
-  
-  
-  
-  
-</div>
+    <!-- Message Sent Confirmation -->
+    <div class="sent-confirmation" id="sentConfirmation">
+        <h2>MESSAGE TRANSMITTED</h2>
+        <div style="color: #00ff00; font-size: 14px; margin-bottom: 15px;">
+            ████████████████████████████<br>
+            █ TRANSMISSION SUCCESSFUL █<br>
+            ████████████████████████████
+        </div>
+        <p>Your anonymous message has been delivered to Sarcon's terminal.</p>
+        <p style="color: #666; font-size: 12px;">Message ID: <span id="messageId"></span></p>
+        <button class="close-btn" onclick="closeConfirmation()">CONTINUE</button>
+    </div>
 
+     <!-- Load EmailJS SDK -->
+<script type="text/javascript"
+        src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js">
+</script>
+<script>
+    (function() {
+        emailjs.init("gnhGO9W2FD9FGro6S"); // replace with your actual Public Key from EmailJS dashboard
+    })();
+</script>
 
-
-
-
-
-
-
-
-
-
-
-
-
-<!-- Scripts -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/three@0.153.0/build/three.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/three@latest/examples/js/controls/OrbitControls.js"></script>
+<!-- Your own script -->
 <script src="script.js"></script>
 </body>
 </html>
